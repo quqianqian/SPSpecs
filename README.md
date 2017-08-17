@@ -100,3 +100,22 @@ pod 'SPPrivateA', '~> 0.0.1'
 ```
 pod install --verbose
 ```
+
+
+# 加载xib
+```
+#define kZLPhotoBrowserBundle [NSBundle bundleForClass:[self class]]
+[[kZLPhotoBrowserBundle loadNibNamed:@"ZLPhotoActionSheet" owner:self options:nil] lastObject];
+[self.collectionView registerNib:[UINib nibWithNibName:@"ZLCollectionCell" bundle:kZLPhotoBrowserBundle] forCellWithReuseIdentifier:@"ZLCollectionCell"];
+```
+
+# 加载图片资源
+```
+// 图片路径
+#define kZLPhotoBrowserSrcName(file) [@"ZLPhotoBrowser.bundle" stringByAppendingPathComponent:file]
+#define kZLPhotoBrowserFrameworkSrcName(file) [@"Frameworks/ZLPhotoBrowser.framework/ZLPhotoBrowser.bundle" stringByAppendingPathComponent:file]
+kZLPhotoBrowserSrcName(file) 为通过copy文件夹方式获取图片路径的宏
+kZLPhotoBrowserFrameworkSrcName(file) 为通过cocoapods下载安装获取图片路径的宏
+
+UIImage *img = [UIImage imageNamed:kZLPhotoBrowserSrcName(@"img.png")]?:[UIImage imageNamed:kZLPhotoBrowserFrameworkSrcName(@"img.png")];
+```
